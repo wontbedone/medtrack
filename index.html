@@ -330,7 +330,7 @@ function next(){
 // These work even in the middle of a question; the question is asked again afterwards.
 // Any of these stops the current question and leaves everything as it was.
 const CANCEL=['cancel','stop','quit','exit','abort'];
-const ANYTIME=['help','?','clear','test','demo','show','show all','forecast','list','ls','changelog','log','version','versions','about'];
+const ANYTIME=['help','?','clear','test','demo','show','show all','forecast','list','ls','changelog','log','version','versions','about','licence','license','licence full','license full'];
 function answer(v){
   const s=flow.steps[flow.i], w=v.trim().toLowerCase();
   if(CANCEL.includes(w)){flow=null;ps.textContent='$';say('<span class="dim">Cancelled. Nothing changed.</span>');return}
@@ -489,6 +489,9 @@ function editMed(i,then){
 
 /* ---------- changelog ---------- */
 const CHANGELOG=[
+  ['v4.6.0','9 Nov 2026','',[
+    ['add','licence command: a plain summary of how medtrack may be used, and licence full for the complete licence text'],
+    ['change','Versions before 4.5.0 are no longer available on GitHub']]],
   ['v4.5.0','9 Nov 2026','',[
     ['change','Licence is now PolyForm Noncommercial: free to use, change and share for any non-commercial purpose, but not to sell'],
     ['add','about shows the licence, and that the Saiko Project name and logo may not be used without permission']]],
@@ -615,6 +618,21 @@ function demo(){
 }
 
 /* ---------- commands ---------- */
+// The full PolyForm Noncommercial License 1.0.0, section by section, for the licence command.
+const LICENCE=[["Acceptance", "In order to get any license under these terms, you must agree to them as both strict obligations and conditions to all your licenses."], ["Copyright License", "The licensor grants you a copyright license for the software to do everything you might do with the software that would otherwise infringe the licensor's copyright in it for any permitted purpose.  However, you may only distribute the software according to Distribution License and make changes or new works based on the software according to Changes and New Works License."], ["Distribution License", "The licensor grants you an additional copyright license to distribute copies of the software.  Your license to distribute covers distributing the software with changes and new works permitted by Changes and New Works License."], ["Notices", "You must ensure that anyone who gets a copy of any part of the software from you also gets a copy of these terms or the URL for them above, as well as copies of any plain-text lines beginning with Required Notice: that the licensor provided with the software.  For example:\nRequired Notice: Copyright Yoyodyne, Inc. (http://example.com)"], ["Changes and New Works License", "The licensor grants you an additional copyright license to make changes and new works based on the software for any permitted purpose."], ["Patent License", "The licensor grants you a patent license for the software that covers patent claims the licensor can license, or becomes able to license, that you would infringe by using the software."], ["Noncommercial Purposes", "Any noncommercial purpose is a permitted purpose."], ["Personal Uses", "Personal use for research, experiment, and testing for the benefit of public knowledge, personal study, private entertainment, hobby projects, amateur pursuits, or religious observance, without any anticipated commercial application, is use for a permitted purpose."], ["Noncommercial Organizations", "Use by any charitable organization, educational institution, public research organization, public safety or health organization, environmental protection organization, or government institution is use for a permitted purpose regardless of the source of funding or obligations resulting from the funding."], ["Fair Use", "You may have \"fair use\" rights for the software under the law. These terms do not limit them."], ["No Other Rights", "These terms do not allow you to sublicense or transfer any of your licenses to anyone else, or prevent the licensor from granting licenses to anyone else.  These terms do not imply any other licenses."], ["Patent Defense", "If you make any written claim that the software infringes or contributes to infringement of any patent, your patent license for the software granted under these terms ends immediately. If your company makes such a claim, your patent license ends immediately for work on behalf of your company."], ["Violations", "The first time you are notified in writing that you have violated any of these terms, or done anything with the software not covered by your licenses, your licenses can nonetheless continue if you come into full compliance with these terms, and take practical steps to correct past violations, within 32 days of receiving notice.  Otherwise, all your licenses end immediately."], ["No Liability", "As far as the law allows, the software comes as is, without any warranty or condition, and the licensor will not be liable to you for any damages arising out of these terms or the use or nature of the software, under any kind of legal claim."], ["Definitions", "The licensor is the individual or entity offering these terms, and the software is the software the licensor makes available under these terms.\nYou refers to the individual or entity agreeing to these terms.\nYour company is any legal entity, sole proprietorship, or other kind of organization that you work for, plus all organizations that have control over, are under the control of, or are under common control with that organization.  Control means ownership of substantially all the assets of an entity, or the power to direct its management and policies by vote, contract, or otherwise.  Control can be direct or indirect.\nYour licenses are all the licenses granted to you for the software under these terms.\nUse means anything you do with the software requiring one of your licenses."]];
+function licence(full){
+  print('');
+  print('<span class="dim">── licence ──────────────────────────────</span>');
+  say('<span class="b">medtrack is free to use, change and share for any non-commercial purpose.</span> <span class="dim">It may not be sold, or used to make money, by anyone.</span>');
+  say('<span class="dim">Licence: </span>PolyForm Noncommercial License 1.0.0');
+  say('<span class="dim">Required Notice: Copyright </span><span class="cy b">Saiko Project</span><span class="dim"> (https://github.com/wontbedone/medtrack)</span>');
+  say('<span class="dim">The Saiko Project name and logo are not covered by the licence and may not be used without permission.</span>');
+  if(!full){print('');return say('<span class="dim">type </span>licence full<span class="dim"> for the complete text</span>')}
+  print('');
+  print('<span class="amb b">PolyForm Noncommercial License 1.0.0</span>');
+  say('<span class="dim">https://polyformproject.org/licenses/noncommercial/1.0.0</span>');
+  LICENCE.forEach(([h,t])=>{print('');print('<span class="cy b">'+esc(h)+'</span>');say(esc(t))});
+}
 // Puts the run-out and 4 and 5 week dates on the clipboard as plain text, ready to paste into a calendar.
 function copyDates(){
   const rows=meds.filter(ready).map(m=>({m,f:forecast(m)})).filter(r=>r.f.out);
@@ -680,6 +698,7 @@ function help(){
   h('test','show an example with made-up medications');
   h('changelog','every version and what changed');
   h('about','what medtrack is and what it keeps');
+  h('licence','how medtrack may be used; licence full for the text');
   h('clear','clear the screen, keeping the heading');
   print('<div class="kv cmds">'+rows+'</div>');
   say('<span class="dim">[#] is the number from </span>list<span class="dim"> or the start of a name, e.g. </span>edit 2<span class="dim"> or </span>refill estr<span class="dim">. Type </span>cancel<span class="dim"> or </span>stop<span class="dim">, or press Esc, to back out of any question. ↑ and ↓ bring back earlier commands.</span>');
@@ -694,6 +713,7 @@ function command(v){
   if(c==='help'||c==='?')return help();
   if(c==='clear'){wipe();banner();return say('<span class="dim">type </span>help<span class="dim"> for commands</span>')}
   if(c==='about')return about();
+  if(c==='licence'||c==='license')return licence(/^(full|all)$/i.test(arg));
   if(c==='show'||c==='forecast')return /^(all|full)$/i.test(arg)?report():summary();
   if(c==='list'||c==='ls')return list();
   if(c==='setup'||c==='count'||c==='amount'||c==='amounts'){

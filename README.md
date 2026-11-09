@@ -39,6 +39,7 @@ medtrack looks like a terminal. Type a command and press Enter.
 | `list` | medications, amounts and schedules |
 | `refill` | add a supply you just picked up |
 | `copy` | copy run-out and reorder dates to paste into a calendar |
+| `licence` | how medtrack may be used (`licence full` for the complete text) |
 | `help` | every command |
 
 When it asks how much you have, you can answer with the days too, like `8 mon thu` or `30 daily`.
@@ -54,7 +55,7 @@ Type `about` in medtrack for the same details.
 
 ## Versions
 
-Each version is a tagged release in this repository. Type `changelog` in medtrack to see what changed in each one.
+Versions from 4.5.0 onwards are tagged releases in this repository. Earlier versions are no longer published. Type `changelog` in medtrack to see what changed in every version.
 
 ## Free to use, not for sale
 
