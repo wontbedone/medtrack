@@ -11,7 +11,7 @@ Tell medtrack what you take and how much you have, and it tells you when each me
 
 **Open it:** https://wontbedone.github.io/medtrack/
 
-> **Made entirely with AI.** medtrack, including its code and logo, was created with AI. It was designed for personal use, to keep track of my own medication supplies. It isn't medical advice: always check dates and amounts against your prescription, and ask your pharmacist or doctor if you're unsure.
+> **Made entirely with AI.** medtrack, including its code and logo, was created with AI. It was designed for personal use. It isn't medical advice: always check dates and amounts against your prescription, and ask your pharmacist or doctor if you're unsure.
 
 ---
 
